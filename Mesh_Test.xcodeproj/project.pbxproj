@@ -1,0 +1,638 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		707C64902CBBC451000630C8 /* BridgefySDK in Frameworks */ = {isa = PBXBuildFile; productRef = 707C648F2CBBC451000630C8 /* BridgefySDK */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		707C64722CBBC3F0000630C8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 707C64592CBBC3EE000630C8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 707C64602CBBC3EE000630C8;
+			remoteInfo = Mesh_Test;
+		};
+		707C647C2CBBC3F0000630C8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 707C64592CBBC3EE000630C8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 707C64602CBBC3EE000630C8;
+			remoteInfo = Mesh_Test;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		A38CA2302DC77E11000C2C9C /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		707C64612CBBC3EE000630C8 /* Mesh_Test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mesh_Test.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		707C64712CBBC3F0000630C8 /* Mesh_TestTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Mesh_TestTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		707C647B2CBBC3F0000630C8 /* Mesh_TestUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Mesh_TestUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		A396013A2DC7895500321023 /* Exceptions for "Mesh_Test" folder in "Mesh_Test" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 707C64602CBBC3EE000630C8 /* Mesh_Test */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		707C64632CBBC3EE000630C8 /* Mesh_Test */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				A396013A2DC7895500321023 /* Exceptions for "Mesh_Test" folder in "Mesh_Test" target */,
+			);
+			path = Mesh_Test;
+			sourceTree = "<group>";
+		};
+		707C64742CBBC3F0000630C8 /* Mesh_TestTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Mesh_TestTests;
+			sourceTree = "<group>";
+		};
+		707C647E2CBBC3F0000630C8 /* Mesh_TestUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Mesh_TestUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		707C645E2CBBC3EE000630C8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				707C64902CBBC451000630C8 /* BridgefySDK in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		707C646E2CBBC3F0000630C8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		707C64782CBBC3F0000630C8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		707C64582CBBC3EE000630C8 = {
+			isa = PBXGroup;
+			children = (
+				707C64632CBBC3EE000630C8 /* Mesh_Test */,
+				707C64742CBBC3F0000630C8 /* Mesh_TestTests */,
+				707C647E2CBBC3F0000630C8 /* Mesh_TestUITests */,
+				707C64912CBBC472000630C8 /* Frameworks */,
+				707C64622CBBC3EE000630C8 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		707C64622CBBC3EE000630C8 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				707C64612CBBC3EE000630C8 /* Mesh_Test.app */,
+				707C64712CBBC3F0000630C8 /* Mesh_TestTests.xctest */,
+				707C647B2CBBC3F0000630C8 /* Mesh_TestUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		707C64912CBBC472000630C8 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		707C64602CBBC3EE000630C8 /* Mesh_Test */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 707C64852CBBC3F0000630C8 /* Build configuration list for PBXNativeTarget "Mesh_Test" */;
+			buildPhases = (
+				707C645D2CBBC3EE000630C8 /* Sources */,
+				707C645E2CBBC3EE000630C8 /* Frameworks */,
+				707C645F2CBBC3EE000630C8 /* Resources */,
+				A38CA2302DC77E11000C2C9C /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				707C64632CBBC3EE000630C8 /* Mesh_Test */,
+			);
+			name = Mesh_Test;
+			packageProductDependencies = (
+				707C648F2CBBC451000630C8 /* BridgefySDK */,
+			);
+			productName = Mesh_Test;
+			productReference = 707C64612CBBC3EE000630C8 /* Mesh_Test.app */;
+			productType = "com.apple.product-type.application";
+		};
+		707C64702CBBC3F0000630C8 /* Mesh_TestTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 707C64882CBBC3F0000630C8 /* Build configuration list for PBXNativeTarget "Mesh_TestTests" */;
+			buildPhases = (
+				707C646D2CBBC3F0000630C8 /* Sources */,
+				707C646E2CBBC3F0000630C8 /* Frameworks */,
+				707C646F2CBBC3F0000630C8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				707C64732CBBC3F0000630C8 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				707C64742CBBC3F0000630C8 /* Mesh_TestTests */,
+			);
+			name = Mesh_TestTests;
+			packageProductDependencies = (
+			);
+			productName = Mesh_TestTests;
+			productReference = 707C64712CBBC3F0000630C8 /* Mesh_TestTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		707C647A2CBBC3F0000630C8 /* Mesh_TestUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 707C648B2CBBC3F0000630C8 /* Build configuration list for PBXNativeTarget "Mesh_TestUITests" */;
+			buildPhases = (
+				707C64772CBBC3F0000630C8 /* Sources */,
+				707C64782CBBC3F0000630C8 /* Frameworks */,
+				707C64792CBBC3F0000630C8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				707C647D2CBBC3F0000630C8 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				707C647E2CBBC3F0000630C8 /* Mesh_TestUITests */,
+			);
+			name = Mesh_TestUITests;
+			packageProductDependencies = (
+			);
+			productName = Mesh_TestUITests;
+			productReference = 707C647B2CBBC3F0000630C8 /* Mesh_TestUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		707C64592CBBC3EE000630C8 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1600;
+				LastUpgradeCheck = 1630;
+				TargetAttributes = {
+					707C64602CBBC3EE000630C8 = {
+						CreatedOnToolsVersion = 16.0;
+					};
+					707C64702CBBC3F0000630C8 = {
+						CreatedOnToolsVersion = 16.0;
+						TestTargetID = 707C64602CBBC3EE000630C8;
+					};
+					707C647A2CBBC3F0000630C8 = {
+						CreatedOnToolsVersion = 16.0;
+						TestTargetID = 707C64602CBBC3EE000630C8;
+					};
+				};
+			};
+			buildConfigurationList = 707C645C2CBBC3EE000630C8 /* Build configuration list for PBXProject "Mesh_Test" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 707C64582CBBC3EE000630C8;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				707C648E2CBBC451000630C8 /* XCRemoteSwiftPackageReference "sdk-ios" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 707C64622CBBC3EE000630C8 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				707C64602CBBC3EE000630C8 /* Mesh_Test */,
+				707C64702CBBC3F0000630C8 /* Mesh_TestTests */,
+				707C647A2CBBC3F0000630C8 /* Mesh_TestUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		707C645F2CBBC3EE000630C8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		707C646F2CBBC3F0000630C8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		707C64792CBBC3F0000630C8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		707C645D2CBBC3EE000630C8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		707C646D2CBBC3F0000630C8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		707C64772CBBC3F0000630C8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		707C64732CBBC3F0000630C8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 707C64602CBBC3EE000630C8 /* Mesh_Test */;
+			targetProxy = 707C64722CBBC3F0000630C8 /* PBXContainerItemProxy */;
+		};
+		707C647D2CBBC3F0000630C8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 707C64602CBBC3EE000630C8 /* Mesh_Test */;
+			targetProxy = 707C647C2CBBC3F0000630C8 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		707C64832CBBC3F0000630C8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 3ZT3WDJMGG;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		707C64842CBBC3F0000630C8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 3ZT3WDJMGG;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		707C64862CBBC3F0000630C8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Mesh_Test/Mesh_Test.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Mesh_Test/Preview Content\"";
+				ENABLE_APP_SANDBOX = NO;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Mesh-Test-Info.plist";
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = Yes;
+				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = Yes;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Praha.Mesh-test.Bridgefy.me";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		707C64872CBBC3F0000630C8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Mesh_Test/Mesh_Test.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Mesh_Test/Preview Content\"";
+				ENABLE_APP_SANDBOX = NO;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Mesh-Test-Info.plist";
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = Yes;
+				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = Yes;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Praha.Mesh-test.Bridgefy.me";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		707C64892CBBC3F0000630C8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Praha.Mesh-TestTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Mesh_Test.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Mesh_Test";
+			};
+			name = Debug;
+		};
+		707C648A2CBBC3F0000630C8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Praha.Mesh-TestTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Mesh_Test.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Mesh_Test";
+			};
+			name = Release;
+		};
+		707C648C2CBBC3F0000630C8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Praha.Mesh-TestUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Mesh_Test;
+			};
+			name = Debug;
+		};
+		707C648D2CBBC3F0000630C8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Praha.Mesh-TestUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Mesh_Test;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		707C645C2CBBC3EE000630C8 /* Build configuration list for PBXProject "Mesh_Test" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				707C64832CBBC3F0000630C8 /* Debug */,
+				707C64842CBBC3F0000630C8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		707C64852CBBC3F0000630C8 /* Build configuration list for PBXNativeTarget "Mesh_Test" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				707C64862CBBC3F0000630C8 /* Debug */,
+				707C64872CBBC3F0000630C8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		707C64882CBBC3F0000630C8 /* Build configuration list for PBXNativeTarget "Mesh_TestTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				707C64892CBBC3F0000630C8 /* Debug */,
+				707C648A2CBBC3F0000630C8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		707C648B2CBBC3F0000630C8 /* Build configuration list for PBXNativeTarget "Mesh_TestUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				707C648C2CBBC3F0000630C8 /* Debug */,
+				707C648D2CBBC3F0000630C8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		707C648E2CBBC451000630C8 /* XCRemoteSwiftPackageReference "sdk-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/bridgefy/sdk-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.2.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		707C648F2CBBC451000630C8 /* BridgefySDK */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 707C648E2CBBC451000630C8 /* XCRemoteSwiftPackageReference "sdk-ios" */;
+			productName = BridgefySDK;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 707C64592CBBC3EE000630C8 /* Project object */;
+}
