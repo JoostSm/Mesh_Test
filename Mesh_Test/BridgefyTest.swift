@@ -11,11 +11,13 @@ class MyBridgefyDelegate: BridgefyDelegate, ObservableObject {
     
     @Published var isBridgefyStarted = false
     @Published var connectedUsers: Set<UUID> = []
+    @Published var localUserId: UUID? = nil
     
     func bridgefyDidFailToStart(with error: BridgefySDK.BridgefyError) {
         DispatchQueue.main.async {
             self.logManager.log("❌ Bridgefy failed to start: \(error.localizedDescription)")
             self.isBridgefyStarted = false
+            self.localUserId = nil
         }
     }
     
@@ -89,6 +91,7 @@ class MyBridgefyDelegate: BridgefyDelegate, ObservableObject {
         DispatchQueue.main.async {
             self.logManager.log("✅ Bridgefy started successfully with User ID: \(userId)")
             self.isBridgefyStarted = true
+            self.localUserId = userId
         }
     }
     
@@ -97,6 +100,7 @@ class MyBridgefyDelegate: BridgefyDelegate, ObservableObject {
             self.logManager.log("Bridgefy stopped")
             self.isBridgefyStarted = false
             self.connectedUsers.removeAll()
+            self.localUserId = nil
         }
     }
 }
@@ -170,6 +174,17 @@ class BridgefyManager: ObservableObject {
     
     func processReceivedData(_ data: Data) -> String? {
         return String(data: data, encoding: .utf8)
+    }
+    
+    func connectToPeer(_ userId: UUID) {
+        logManager.log("Attempting to establish secure connection with: \(userId)")
+        bridgefyInstance.establishSecureConnection(with: userId)
+    }
+    
+    func disconnectFromPeer(_ userId: UUID) {
+        logManager.log("Disconnecting from peer: \(userId)")
+        // Note: Bridgefy doesn't have a direct disconnect method
+        // Connections are managed automatically based on proximity
     }
 }
 

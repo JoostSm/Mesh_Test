@@ -6,6 +6,7 @@
 //
 
 import CoreBluetooth
+import BridgefySDK
 import SwiftUI
 
 struct ContentView: View {
@@ -14,7 +15,15 @@ struct ContentView: View {
     @StateObject private var bridgefyDelegate: MyBridgefyDelegate
     @State private var messageText = ""
     @State private var isInitializing = false
-    @State private var connectedUsersCount: Int = 0
+    @State private var selectedPeer: UUID?
+    @State private var showingPeerList = false
+    
+    enum TransmissionStrategy: String, CaseIterable, Identifiable {
+        case standard = "Auto (P2P/Broadcast)"
+        case meshToPeer = "Mesh (to Selected Peer)"
+        var id: String { self.rawValue }
+    }
+    @State private var transmissionStrategy: TransmissionStrategy = .standard
     
     init() {
         let sharedLogManager = LogManager()
@@ -77,6 +86,40 @@ struct ContentView: View {
                 .padding(.top, 10)
                 .background(Color.white)
                 
+                VStack(spacing: 0) {
+                    // Add Peer Connection Section
+                    VStack(alignment: .leading, spacing: 10) {
+                        HStack {
+                            Text("Available Peers")
+                                .font(.headline)
+                            Spacer()
+                            Button(action: { showingPeerList = true }) {
+                                Image(systemName: "person.2")
+                                Text("Connect")
+                            }
+                            .disabled(!bridgefyDelegate.isBridgefyStarted)
+                        }
+                        .padding(.horizontal)
+                        
+                        // Show selected peer if any
+                        if let selectedPeer = selectedPeer {
+                            HStack {
+                                Text("Connected to:")
+                                    .foregroundColor(.gray)
+                                Text(selectedPeer.uuidString.prefix(8))
+                                    .foregroundColor(.green)
+                                Spacer()
+                                Button(action: { self.selectedPeer = nil }) {
+                                    Text("Disconnect")
+                                        .foregroundColor(.red)
+                                }
+                            }
+                            .padding(.horizontal)
+                        }
+                    }
+                    .padding(.vertical, 10)
+                }
+                
                 // Initialize button
                 Button(action: {
                     isInitializing = true
@@ -99,7 +142,15 @@ struct ContentView: View {
                 }
                 .disabled(isInitializing)
                 .padding(.top, 20)
-                
+
+                Picker("Send Mode", selection: $transmissionStrategy) {
+                    ForEach(TransmissionStrategy.allCases) { strategy in
+                        Text(strategy.rawValue).tag(strategy)
+                    }
+                }
+                .pickerStyle(SegmentedPickerStyle())
+                .padding()
+
                 // Log messages
                 ScrollView {
                     LazyVStack(alignment: .leading, spacing: 8) {
@@ -138,20 +189,29 @@ struct ContentView: View {
                 .shadow(radius: 5, y: -5)
             }
         }
+        .sheet(isPresented: $showingPeerList) {
+            PeerListView(
+                connectedUsers: bridgefyDelegate.connectedUsers,
+                selectedPeer: $selectedPeer,
+                isPresented: $showingPeerList
+            )
+        }
     }
     
     private var canSendMessage: Bool {
-        !messageText.isEmpty && bridgefyDelegate.isBridgefyStarted
+        guard !messageText.isEmpty && bridgefyDelegate.isBridgefyStarted else { return false }
+        
+        switch transmissionStrategy {
+        case .standard:
+            return true // Standard mode can always attempt (P2P or Broadcast)
+        case .meshToPeer:
+            return selectedPeer != nil // MeshToPeer requires a selected peer
+        }
     }
     
     private func sendMessage() {
         guard !messageText.isEmpty, let data = messageText.data(using: .utf8) else {
             logManager.log("❌ Invalid message")
-            return
-        }
-        
-        guard bridgefyDelegate.isBridgefyStarted else {
-            logManager.log("❌ Bridgefy is not started")
             return
         }
         
@@ -166,24 +226,39 @@ struct ContentView: View {
             logManager: logManager
         )
         
-        logManager.log("Attempting to send message: \(messageText)")
+        let finalTransmissionMode: TransmissionMode?
         
-        // If we have connected users, send P2P, otherwise broadcast
-        if let firstUser = bridgefyDelegate.connectedUsers.first {
-            bridgefyManager.sendData(
-                data,
-                transmissionMode: .p2p(userId: firstUser)
-            )
-            logManager.log("Sending P2P message to user: \(firstUser)")
-        } else {
-            bridgefyManager.sendData(
-                data,
-                transmissionMode: .broadcast(senderId: UUID())
-            )
-            logManager.log("No direct connections found - broadcasting message")
+        switch transmissionStrategy {
+        case .standard:
+            if let peer = selectedPeer {
+                finalTransmissionMode = .p2p(userId: peer)
+                logManager.log("Sending P2P message to: \(peer) using Standard strategy")
+            } else {
+                if let localId = bridgefyDelegate.localUserId {
+                    finalTransmissionMode = .broadcast(senderId: localId)
+                    logManager.log("Broadcasting message using Standard strategy with local ID: \(localId)")
+                } else {
+                    // Fallback if localUserId is somehow nil, though isBridgefyStarted should imply it's set
+                    logManager.log("⚠️ localUserId is nil, falling back to new UUID for broadcast senderId.")
+                    finalTransmissionMode = .broadcast(senderId: UUID())
+                }
+            }
+        case .meshToPeer:
+            if let peer = selectedPeer {
+                finalTransmissionMode = .mesh(userId: peer)
+                logManager.log("Sending Mesh message to selected peer: \(peer)")
+            } else {
+                logManager.log("❌ Cannot send Mesh message: No peer selected.")
+                finalTransmissionMode = nil 
+            }
         }
         
-        messageText = ""
+        if let mode = finalTransmissionMode {
+            bridgefyManager.sendData(data, transmissionMode: mode)
+            messageText = ""
+        } else {
+            logManager.log("❌ Message not sent due to configuration.")
+        }
     }
 }
 
