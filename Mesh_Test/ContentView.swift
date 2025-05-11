@@ -17,6 +17,8 @@ struct ContentView: View {
     @State private var isInitializing = false
     @State private var selectedPeer: UUID?
     @State private var showingPeerList = false
+    @State private var deviceName: String = ""
+    @State private var showingNameErrorAlert: Bool = false
     
     enum TransmissionStrategy: String, CaseIterable, Identifiable {
         case standard = "Auto (P2P/Broadcast)"
@@ -38,14 +40,17 @@ struct ContentView: View {
                 .ignoresSafeArea()
             
             VStack(spacing: 0) {
-                // Status section with explanations
                 VStack(alignment: .leading, spacing: 15) {
-                    Text("Mesh Network Status")
+                    Text("Mesh Network Setup")
                         .font(.headline)
                         .padding(.horizontal)
                     
+                    TextField("Enter Your Device Name", text: $deviceName)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .padding(.horizontal)
+                        .disabled(bridgefyDelegate.isBridgefyStarted || isInitializing)
+
                     VStack(alignment: .leading, spacing: 8) {
-                        // Bluetooth status with explanation
                         VStack(alignment: .leading, spacing: 4) {
                             Text("Bluetooth Hardware")
                                 .font(.caption)
@@ -57,19 +62,17 @@ struct ContentView: View {
                             )
                         }
                         
-                        // Bridgefy status with explanation
                         VStack(alignment: .leading, spacing: 4) {
                             Text("Mesh Network Service")
                                 .font(.caption)
                                 .foregroundColor(.gray)
                             StatusIndicator(
                                 isActive: bridgefyDelegate.isBridgefyStarted,
-                                text: "Status: \(bridgefyDelegate.isBridgefyStarted ? "Connected" : "Disconnected")",
+                                text: "Status: \(bridgefyDelegate.isBridgefyStarted ? "Connected as \(bridgefyDelegate.customDeviceName ?? "Unknown")" : "Disconnected")",
                                 description: "Bridgefy mesh network service status"
                             )
                         }
                         
-                        // Connected peers with explanation
                         VStack(alignment: .leading, spacing: 4) {
                             Text("Connected Devices")
                                 .font(.caption)
@@ -87,7 +90,6 @@ struct ContentView: View {
                 .background(Color.white)
                 
                 VStack(spacing: 0) {
-                    // Add Peer Connection Section
                     VStack(alignment: .leading, spacing: 10) {
                         HStack {
                             Text("Available Peers")
@@ -101,12 +103,11 @@ struct ContentView: View {
                         }
                         .padding(.horizontal)
                         
-                        // Show selected peer if any
                         if let selectedPeer = selectedPeer {
                             HStack {
                                 Text("Connected to:")
                                     .foregroundColor(.gray)
-                                Text(selectedPeer.uuidString.prefix(8))
+                                Text(bridgefyDelegate.deviceNames[selectedPeer] ?? String(selectedPeer.uuidString.prefix(8)))
                                     .foregroundColor(.green)
                                 Spacer()
                                 Button(action: { self.selectedPeer = nil }) {
@@ -120,16 +121,19 @@ struct ContentView: View {
                     .padding(.vertical, 10)
                 }
                 
-                // Initialize button
                 Button(action: {
-                    isInitializing = true
-                    initializeBridgefy(logManager: logManager, delegate: bridgefyDelegate)
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-                        isInitializing = false
+                    if deviceName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                        showingNameErrorAlert = true
+                    } else {
+                        isInitializing = true
+                        initializeBridgefy(deviceName: deviceName, logManager: logManager, delegate: bridgefyDelegate)
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+                            isInitializing = false
+                        }
                     }
                 }) {
                     HStack {
-                        Text(isInitializing ? "Initializing..." : "Initialize Bridgefy")
+                        Text(isInitializing ? "Initializing..." : (bridgefyDelegate.isBridgefyStarted ? "Re-initialize Bridgefy" : "Initialize Bridgefy"))
                         if isInitializing {
                             ProgressView()
                                 .progressViewStyle(CircularProgressViewStyle(tint: .white))
@@ -140,7 +144,7 @@ struct ContentView: View {
                     .foregroundColor(.white)
                     .cornerRadius(10)
                 }
-                .disabled(isInitializing)
+                .disabled(isInitializing || bridgefyDelegate.isBridgefyStarted)
                 .padding(.top, 20)
 
                 Picker("Send Mode", selection: $transmissionStrategy) {
@@ -151,7 +155,6 @@ struct ContentView: View {
                 .pickerStyle(SegmentedPickerStyle())
                 .padding()
 
-                // Log messages
                 ScrollView {
                     LazyVStack(alignment: .leading, spacing: 8) {
                         ForEach(Array(zip(logManager.logMessages.indices, logManager.logMessages)), id: \.0) { index, message in
@@ -167,7 +170,6 @@ struct ContentView: View {
                 
                 Spacer()
                 
-                // Message input and send button
                 VStack(spacing: 10) {
                     TextField("Enter message", text: $messageText)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
@@ -196,6 +198,11 @@ struct ContentView: View {
                 isPresented: $showingPeerList
             )
         }
+        .alert("Device Name Required", isPresented: $showingNameErrorAlert) {
+            Button("OK", role: .cancel) { }
+        } message: {
+            Text("Please enter a device name before initializing.")
+        }
     }
     
     private var canSendMessage: Bool {
@@ -203,9 +210,9 @@ struct ContentView: View {
         
         switch transmissionStrategy {
         case .standard:
-            return true // Standard mode can always attempt (P2P or Broadcast)
+            return true
         case .meshToPeer:
-            return selectedPeer != nil // MeshToPeer requires a selected peer
+            return selectedPeer != nil
         }
     }
     
@@ -239,7 +246,6 @@ struct ContentView: View {
                     finalTransmissionMode = .broadcast(senderId: localId)
                     logManager.log("Broadcasting message using Standard strategy with local ID: \(localId)")
                 } else {
-                    // Fallback if localUserId is somehow nil, though isBridgefyStarted should imply it's set
                     logManager.log("⚠️ localUserId is nil, falling back to new UUID for broadcast senderId.")
                     finalTransmissionMode = .broadcast(senderId: UUID())
                 }
