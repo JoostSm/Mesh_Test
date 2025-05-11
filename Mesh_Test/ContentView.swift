@@ -191,7 +191,7 @@ struct ContentView: View {
         }
         .sheet(isPresented: $showingPeerList) {
             PeerListView(
-                connectedUsers: bridgefyDelegate.connectedUsers,
+                bridgefyDelegate: bridgefyDelegate,
                 selectedPeer: $selectedPeer,
                 isPresented: $showingPeerList
             )
@@ -231,8 +231,9 @@ struct ContentView: View {
         switch transmissionStrategy {
         case .standard:
             if let peer = selectedPeer {
+                let peerDisplayName = bridgefyDelegate.deviceNames[peer] ?? String(peer.uuidString.prefix(8))
                 finalTransmissionMode = .p2p(userId: peer)
-                logManager.log("Sending P2P message to: \(peer) using Standard strategy")
+                logManager.log("Sending P2P message to: \(peerDisplayName)")
             } else {
                 if let localId = bridgefyDelegate.localUserId {
                     finalTransmissionMode = .broadcast(senderId: localId)
@@ -245,11 +246,12 @@ struct ContentView: View {
             }
         case .meshToPeer:
             if let peer = selectedPeer {
+                let peerDisplayName = bridgefyDelegate.deviceNames[peer] ?? String(peer.uuidString.prefix(8))
                 finalTransmissionMode = .mesh(userId: peer)
-                logManager.log("Sending Mesh message to selected peer: \(peer)")
+                logManager.log("Sending Mesh message to selected peer: \(peerDisplayName)")
             } else {
                 logManager.log("❌ Cannot send Mesh message: No peer selected.")
-                finalTransmissionMode = nil 
+                finalTransmissionMode = nil
             }
         }
         

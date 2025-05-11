@@ -1,6 +1,7 @@
 import CoreBluetooth
 import BridgefySDK
 import SwiftUI
+import UIKit
 
 class MyBridgefyDelegate: BridgefyDelegate, ObservableObject {
     private let logManager: LogManager
@@ -12,6 +13,7 @@ class MyBridgefyDelegate: BridgefyDelegate, ObservableObject {
     @Published var isBridgefyStarted = false
     @Published var connectedUsers: Set<UUID> = []
     @Published var localUserId: UUID? = nil
+    @Published var deviceNames: [UUID: String] = [:] // This should already exist
     
     func bridgefyDidFailToStart(with error: BridgefySDK.BridgefyError) {
         DispatchQueue.main.async {
@@ -37,6 +39,8 @@ class MyBridgefyDelegate: BridgefyDelegate, ObservableObject {
         DispatchQueue.main.async {
             self.logManager.log("✅ Connected with user: \(userId)")
             self.connectedUsers.insert(userId)
+            // Optionally, you could re-broadcast your device name here or request theirs
+            // For now, initial broadcast on start and passive listening is implemented.
         }
     }
     
@@ -44,6 +48,7 @@ class MyBridgefyDelegate: BridgefyDelegate, ObservableObject {
         DispatchQueue.main.async {
             self.logManager.log("Disconnected from user: \(userId)")
             self.connectedUsers.remove(userId)
+            // deviceNames.removeValue(forKey: userId) // Optionally remove name on disconnect
         }
     }
     
@@ -68,6 +73,19 @@ class MyBridgefyDelegate: BridgefyDelegate, ObservableObject {
     }
     
     func bridgefyDidReceiveData(_ data: Data, with messageId: UUID, using transmissionMode: BridgefySDK.TransmissionMode) {
+        // Attempt to decode as DeviceNameMessage first
+        let decoder = JSONDecoder()
+        if let nameMessage = try? decoder.decode(DeviceNameMessage.self, from: data) {
+            DispatchQueue.main.async {
+                // Store or update the device name
+                self.deviceNames[nameMessage.senderBridgefyID] = nameMessage.deviceName
+                self.logManager.log("ℹ️ Received device name: '\(nameMessage.deviceName)' for ID: \(nameMessage.senderBridgefyID.uuidString.prefix(8))")
+            }
+            // This was a device name message, so we don't process it as a chat message.
+            return
+        }
+
+        // If not a DeviceNameMessage, process as a regular chat message
         if let message = String(data: data, encoding: .utf8) {
             DispatchQueue.main.async {
                 self.logManager.log("📩 Received message: \(message)")
@@ -75,15 +93,18 @@ class MyBridgefyDelegate: BridgefyDelegate, ObservableObject {
                 
                 switch transmissionMode {
                 case .broadcast(let senderId):
-                    self.logManager.log("Broadcast from: \(senderId)")
+                    self.logManager.log("Broadcast from: \(senderId.uuidString.prefix(8))")
                 case .mesh(let userId):
-                    self.logManager.log("Mesh message from: \(userId)")
+                    self.logManager.log("Mesh message from: \(userId.uuidString.prefix(8))")
                 case .p2p(userId: let userId):
-                    self.logManager.log("P2P message from: \(userId)")
+                    self.logManager.log("P2P message from: \(userId.uuidString.prefix(8))")
                 @unknown default:
                     self.logManager.log("Unknown transmission mode")
                 }
             }
+        } else {
+            // Log if data is neither a valid DeviceNameMessage nor a UTF-8 string
+            self.logManager.log("⚠️ Received data that could not be decoded as DeviceNameMessage or String. Message ID: \(messageId)")
         }
     }
     
@@ -92,6 +113,9 @@ class MyBridgefyDelegate: BridgefyDelegate, ObservableObject {
             self.logManager.log("✅ Bridgefy started successfully with User ID: \(userId)")
             self.isBridgefyStarted = true
             self.localUserId = userId
+
+            // Now, broadcast our device name
+            self.broadcastOwnDeviceName(localBridgefyId: userId)
         }
     }
     
@@ -99,10 +123,37 @@ class MyBridgefyDelegate: BridgefyDelegate, ObservableObject {
         DispatchQueue.main.async {
             self.logManager.log("Bridgefy stopped")
             self.isBridgefyStarted = false
-            self.connectedUsers.removeAll()
             self.localUserId = nil
+            self.connectedUsers.removeAll()
+            // self.deviceNames.removeAll() // Optionally clear all names on stop
         }
     }
+
+    private func broadcastOwnDeviceName(localBridgefyId: UUID) {
+        guard let bridgefyInstance = bridgefy else { // Access the global bridgefy instance
+            logManager.log("❌ Bridgefy instance not available to broadcast device name.")
+            return
+        }
+
+        let myDeviceName = UIDevice.current.name
+        let nameMessagePayload = DeviceNameMessage(senderBridgefyID: localBridgefyId, deviceName: myDeviceName)
+        
+        let encoder = JSONEncoder()
+        do {
+            let data = try encoder.encode(nameMessagePayload)
+            // Send as a broadcast so all nearby peers can learn our name
+            // The senderId in .broadcast is this device's Bridgefy ID
+            _ = try bridgefyInstance.send(data, using: .broadcast(senderId: localBridgefyId))
+            logManager.log("📢 Broadcasted own device name: '\(myDeviceName)' with ID: \(localBridgefyId.uuidString.prefix(8))")
+        } catch {
+            logManager.log("❌ Error encoding or sending own device name: \(error.localizedDescription)")
+        }
+    }
+}
+
+struct DeviceNameMessage: Codable {
+    let senderBridgefyID: UUID
+    let deviceName: String
 }
 
 var bridgefy: Bridgefy?
