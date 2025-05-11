@@ -9,6 +9,16 @@ import CoreBluetooth
 import BridgefySDK
 import SwiftUI
 
+extension Color {
+    static let darkBackground = Color(UIColor.systemGray6)
+    static let darkElementBackground = Color(UIColor.systemGray5)
+    static let darkTextPrimary = Color.white
+    static let darkTextSecondary = Color(UIColor.lightGray)
+    static let darkAccent = Color.blue
+    static let darkGreen = Color.green
+    static let darkGrayButton = Color(UIColor.darkGray)
+}
+
 struct ContentView: View {
     @StateObject private var logManager = LogManager()
     @StateObject private var bluetoothManager: BluetoothManager
@@ -20,6 +30,8 @@ struct ContentView: View {
     @State private var deviceName: String = ""
     @State private var showingNameErrorAlert: Bool = false
     
+    @Environment(\.colorScheme) var colorScheme
+
     enum TransmissionStrategy: String, CaseIterable, Identifiable {
         case standard = "Auto (P2P/Broadcast)"
         case meshToPeer = "Mesh (to Selected Peer)"
@@ -32,73 +44,82 @@ struct ContentView: View {
         _logManager = StateObject(wrappedValue: sharedLogManager)
         _bluetoothManager = StateObject(wrappedValue: BluetoothManager(logManager: sharedLogManager))
         _bridgefyDelegate = StateObject(wrappedValue: MyBridgefyDelegate(logManager: sharedLogManager))
+
+        // Customize Picker appearance for dark mode if needed (globally)
+        // UISegmentedControl.appearance().selectedSegmentTintColor = UIColor.systemBlue
+        // UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor.white], for: .selected)
+        // UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor.lightGray], for: .normal)
     }
     
     var body: some View {
         ZStack {
-            Color.white
+            (colorScheme == .dark ? Color.darkBackground : Color.white)
                 .ignoresSafeArea()
             
             VStack(spacing: 0) {
-                VStack(alignment: .leading, spacing: 15) {
-                    Text("Mesh Network Setup")
-                        .font(.headline)
-                        .padding(.horizontal)
-                    
-                    TextField("Enter Your Device Name", text: $deviceName)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .padding(.horizontal)
-                        .disabled(bridgefyDelegate.isBridgefyStarted || isInitializing)
+                HStack {
+                    Image("nexus.png")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 60, height: 60)
+                        .padding(.leading)
 
-                    VStack(alignment: .leading, spacing: 8) {
+                    Spacer()
+
+                    VStack(alignment: .trailing, spacing: 8) {
                         VStack(alignment: .leading, spacing: 4) {
                             Text("Bluetooth Hardware")
                                 .font(.caption)
-                                .foregroundColor(.gray)
+                                .foregroundColor(colorScheme == .dark ? .darkTextSecondary : .gray)
                             StatusIndicator(
                                 isActive: bluetoothManager.bluetoothState == .poweredOn,
                                 text: "Status: \(bluetoothManager.bluetoothState.description)",
-                                description: "Hardware must be powered on to enable mesh networking"
+                                description: "Hardware must be powered on to enable mesh networking",
+                                isDarkMode: colorScheme == .dark
                             )
                         }
                         
                         VStack(alignment: .leading, spacing: 4) {
                             Text("Mesh Network Service")
                                 .font(.caption)
-                                .foregroundColor(.gray)
+                                .foregroundColor(colorScheme == .dark ? .darkTextSecondary : .gray)
                             StatusIndicator(
                                 isActive: bridgefyDelegate.isBridgefyStarted,
-                                text: "Status: \(bridgefyDelegate.isBridgefyStarted ? "Connected as \(bridgefyDelegate.customDeviceName ?? "Unknown")" : "Disconnected")",
-                                description: "Bridgefy mesh network service status"
+                                text: "Status: \(bridgefyDelegate.isBridgefyStarted ? "Online as \(bridgefyDelegate.customDeviceName ?? "Unknown")" : "Offline")",
+                                description: "Bridgefy mesh network service status",
+                                isDarkMode: colorScheme == .dark
                             )
                         }
                         
                         VStack(alignment: .leading, spacing: 4) {
                             Text("Connected Devices")
                                 .font(.caption)
-                                .foregroundColor(.gray)
+                                .foregroundColor(colorScheme == .dark ? .darkTextSecondary : .gray)
                             StatusIndicator(
                                 isActive: !bridgefyDelegate.connectedUsers.isEmpty,
-                                text: "Active peers: \(bridgefyDelegate.connectedUsers.count)",
-                                description: "Number of directly connected devices"
+                                text: "Peers: \(bridgefyDelegate.connectedUsers.count)",
+                                description: "Number of directly connected devices",
+                                isDarkMode: colorScheme == .dark
                             )
                         }
                     }
-                    .padding(.horizontal)
+                    .padding(.trailing)
                 }
                 .padding(.top, 10)
-                .background(Color.white)
-                
+                .padding(.bottom, 10)
+
                 VStack(spacing: 0) {
                     VStack(alignment: .leading, spacing: 10) {
                         HStack {
                             Text("Available Peers")
                                 .font(.headline)
+                                .foregroundColor(colorScheme == .dark ? .darkTextPrimary : .black)
                             Spacer()
                             Button(action: { showingPeerList = true }) {
                                 Image(systemName: "person.2")
                                 Text("Connect")
                             }
+                            .foregroundColor(colorScheme == .dark ? .darkAccent : .blue)
                             .disabled(!bridgefyDelegate.isBridgefyStarted)
                         }
                         .padding(.horizontal)
@@ -106,13 +127,13 @@ struct ContentView: View {
                         if let selectedPeer = selectedPeer {
                             HStack {
                                 Text("Connected to:")
-                                    .foregroundColor(.gray)
+                                    .foregroundColor(colorScheme == .dark ? .darkTextSecondary : .gray)
                                 Text(bridgefyDelegate.deviceNames[selectedPeer] ?? String(selectedPeer.uuidString.prefix(8)))
-                                    .foregroundColor(.green)
+                                    .foregroundColor(colorScheme == .dark ? .darkGreen : .green)
                                 Spacer()
                                 Button(action: { self.selectedPeer = nil }) {
                                     Text("Disconnect")
-                                        .foregroundColor(.red)
+                                        .foregroundColor(colorScheme == .dark ? Color.pink : .red)
                                 }
                             }
                             .padding(.horizontal)
@@ -140,7 +161,7 @@ struct ContentView: View {
                         }
                     }
                     .padding()
-                    .background(Color.blue)
+                    .background(colorScheme == .dark ? Color.darkGrayButton : Color.blue)
                     .foregroundColor(.white)
                     .cornerRadius(10)
                 }
@@ -154,32 +175,50 @@ struct ContentView: View {
                 }
                 .pickerStyle(SegmentedPickerStyle())
                 .padding()
+                .colorScheme(colorScheme == .dark ? .dark : .light)
+
 
                 ScrollView {
                     LazyVStack(alignment: .leading, spacing: 8) {
                         ForEach(Array(zip(logManager.logMessages.indices, logManager.logMessages)), id: \.0) { index, message in
                             Text(message)
                                 .padding(.horizontal)
+                                .foregroundColor(colorScheme == .dark ? .darkTextSecondary : .black)
                         }
                     }
                 }
                 .frame(maxWidth: .infinity)
-                .background(Color.black.opacity(0.1))
+                .background(colorScheme == .dark ? Color.darkElementBackground.opacity(0.5) : Color.black.opacity(0.1))
                 .cornerRadius(10)
                 .padding()
                 
                 Spacer()
                 
                 VStack(spacing: 10) {
+                    TextField("Enter Your Device Name", text: $deviceName)
+                        .textFieldStyle(PlainTextFieldStyle())
+                        .padding(10)
+                        .background(colorScheme == .dark ? Color.darkElementBackground.opacity(0.5) : Color(UIColor.systemGray6))
+                        .cornerRadius(8)
+                        .foregroundColor(colorScheme == .dark ? .darkTextPrimary : .black)
+                        .accentColor(colorScheme == .dark ? .darkAccent : .blue)
+                        .padding(.horizontal)
+                        .disabled(bridgefyDelegate.isBridgefyStarted || isInitializing)
+
                     TextField("Enter message", text: $messageText)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .textFieldStyle(PlainTextFieldStyle())
+                        .padding(10)
+                        .background(colorScheme == .dark ? Color.darkElementBackground.opacity(0.5) : Color(UIColor.systemGray6))
+                        .cornerRadius(8)
+                        .foregroundColor(colorScheme == .dark ? .darkTextPrimary : .black)
+                        .accentColor(colorScheme == .dark ? .darkAccent : .blue)
                         .padding(.horizontal)
                     
                     Button(action: sendMessage) {
                         Text("Send")
                             .frame(maxWidth: .infinity)
                             .padding()
-                            .background(canSendMessage ? Color.green : Color.gray)
+                            .background(canSendMessage ? (colorScheme == .dark ? Color.darkGreen.opacity(0.8) : Color.green) : Color.gray)
                             .foregroundColor(.white)
                             .cornerRadius(10)
                     }
@@ -187,8 +226,6 @@ struct ContentView: View {
                     .padding(.horizontal)
                 }
                 .padding(.bottom, 20)
-                .background(Color.white)
-                .shadow(radius: 5, y: -5)
             }
         }
         .sheet(isPresented: $showingPeerList) {
@@ -197,6 +234,7 @@ struct ContentView: View {
                 selectedPeer: $selectedPeer,
                 isPresented: $showingPeerList
             )
+            .preferredColorScheme(colorScheme == .dark ? .dark : .light)
         }
         .alert("Device Name Required", isPresented: $showingNameErrorAlert) {
             Button("OK", role: .cancel) { }
@@ -274,6 +312,7 @@ struct StatusIndicator: View {
     let isActive: Bool
     let text: String
     let description: String
+    let isDarkMode: Bool
     
     var body: some View {
         HStack {
@@ -282,18 +321,17 @@ struct StatusIndicator: View {
                 .frame(width: 8, height: 8)
             Text(text)
                 .font(.caption)
+                .foregroundColor(isDarkMode ? .darkTextSecondary : .black)
         }
         .padding(6)
-        .background(Color.white)
+        .background(isDarkMode ? Color.darkElementBackground.opacity(0.3) : Color.white)
         .cornerRadius(15)
-        .shadow(radius: 2)
+        .shadow(color: isDarkMode ? .clear : .gray.opacity(0.5) , radius: isDarkMode ? 0 : 2)
         .help(description)
     }
 }
 
 #Preview {
-    let logManager = LogManager()
-    let bluetoothManager = BluetoothManager(logManager: logManager)
-    let bridgefyDelegate = MyBridgefyDelegate(logManager: logManager)
-    return ContentView()
+    ContentView().preferredColorScheme(.light)
+    ContentView().preferredColorScheme(.dark)
 }

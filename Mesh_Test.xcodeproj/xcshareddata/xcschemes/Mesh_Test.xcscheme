@@ -16,7 +16,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "707C64602CBBC3EE000630C8"
-               BuildableName = "Mesh_Test.app"
+               BuildableName = "Nexus.app"
                BlueprintName = "Mesh_Test"
                ReferencedContainer = "container:Mesh_Test.xcodeproj">
             </BuildableReference>
@@ -69,7 +69,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "707C64602CBBC3EE000630C8"
-            BuildableName = "Mesh_Test.app"
+            BuildableName = "Nexus.app"
             BlueprintName = "Mesh_Test"
             ReferencedContainer = "container:Mesh_Test.xcodeproj">
          </BuildableReference>
@@ -86,7 +86,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "707C64602CBBC3EE000630C8"
-            BuildableName = "Mesh_Test.app"
+            BuildableName = "Nexus.app"
             BlueprintName = "Mesh_Test"
             ReferencedContainer = "container:Mesh_Test.xcodeproj">
          </BuildableReference>
