@@ -2,6 +2,9 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+    <!-- ADD: Bundle display name -->
+    <key>CFBundleDisplayName</key>
+    <string>Nexus</string>
     <key>NSBluetoothAlwaysUsageDescription</key>
     <string>This app needs Bluetooth access to connect with nearby devices for mesh networking.</string>
     <key>NSBluetoothPeripheralUsageDescription</key>

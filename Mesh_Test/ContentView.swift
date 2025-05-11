@@ -40,17 +40,16 @@ struct ContentView: View {
                 .ignoresSafeArea()
             
             VStack(spacing: 0) {
-                VStack(alignment: .leading, spacing: 15) {
-                    Text("Mesh Network Setup")
-                        .font(.headline)
-                        .padding(.horizontal)
-                    
-                    TextField("Enter Your Device Name", text: $deviceName)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .padding(.horizontal)
-                        .disabled(bridgefyDelegate.isBridgefyStarted || isInitializing)
+                HStack {
+                    Image("nexus.png")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 60, height: 60)
+                        .padding(.leading)
 
-                    VStack(alignment: .leading, spacing: 8) {
+                    Spacer()
+
+                    VStack(alignment: .trailing, spacing: 8) {
                         VStack(alignment: .leading, spacing: 4) {
                             Text("Bluetooth Hardware")
                                 .font(.caption)
@@ -68,7 +67,7 @@ struct ContentView: View {
                                 .foregroundColor(.gray)
                             StatusIndicator(
                                 isActive: bridgefyDelegate.isBridgefyStarted,
-                                text: "Status: \(bridgefyDelegate.isBridgefyStarted ? "Connected as \(bridgefyDelegate.customDeviceName ?? "Unknown")" : "Disconnected")",
+                                text: "Status: \(bridgefyDelegate.isBridgefyStarted ? "Online as \(bridgefyDelegate.customDeviceName ?? "Unknown")" : "Offline")",
                                 description: "Bridgefy mesh network service status"
                             )
                         }
@@ -79,16 +78,17 @@ struct ContentView: View {
                                 .foregroundColor(.gray)
                             StatusIndicator(
                                 isActive: !bridgefyDelegate.connectedUsers.isEmpty,
-                                text: "Active peers: \(bridgefyDelegate.connectedUsers.count)",
+                                text: "Peers: \(bridgefyDelegate.connectedUsers.count)",
                                 description: "Number of directly connected devices"
                             )
                         }
                     }
-                    .padding(.horizontal)
+                    .padding(.trailing)
                 }
                 .padding(.top, 10)
+                .padding(.bottom, 10)
                 .background(Color.white)
-                
+
                 VStack(spacing: 0) {
                     VStack(alignment: .leading, spacing: 10) {
                         HStack {
@@ -171,6 +171,11 @@ struct ContentView: View {
                 Spacer()
                 
                 VStack(spacing: 10) {
+                    TextField("Enter Your Device Name", text: $deviceName)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .padding(.horizontal)
+                        .disabled(bridgefyDelegate.isBridgefyStarted || isInitializing)
+
                     TextField("Enter message", text: $messageText)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .padding(.horizontal)
