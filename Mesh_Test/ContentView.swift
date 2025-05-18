@@ -117,22 +117,21 @@ struct ContentView: View {
                             Spacer()
                             Button(action: { showingPeerList = true }) {
                                 Image(systemName: "person.2")
-                                Text("Connect")
+                                Text("View All")
                             }
                             .foregroundColor(colorScheme == .dark ? .darkAccent : .blue)
-                            .disabled(!bridgefyDelegate.isBridgefyStarted)
                         }
                         .padding(.horizontal)
                         
                         if let selectedPeer = selectedPeer {
                             HStack {
-                                Text("Connected to:")
+                                Text("Selected Peer:")
                                     .foregroundColor(colorScheme == .dark ? .darkTextSecondary : .gray)
                                 Text(bridgefyDelegate.deviceNames[selectedPeer] ?? String(selectedPeer.uuidString.prefix(8)))
                                     .foregroundColor(colorScheme == .dark ? .darkGreen : .green)
                                 Spacer()
                                 Button(action: { self.selectedPeer = nil }) {
-                                    Text("Disconnect")
+                                    Text("Deselect")
                                         .foregroundColor(colorScheme == .dark ? Color.pink : .red)
                                 }
                             }
@@ -161,12 +160,30 @@ struct ContentView: View {
                         }
                     }
                     .padding()
+                    .frame(maxWidth: .infinity)
                     .background(colorScheme == .dark ? Color.darkGrayButton : Color.blue)
                     .foregroundColor(.white)
                     .cornerRadius(10)
                 }
                 .disabled(isInitializing || bridgefyDelegate.isBridgefyStarted)
-                .padding(.top, 20)
+                .padding(.horizontal)
+                .padding(.top, 10)
+
+                if bridgefyDelegate.isBridgefyStarted {
+                    Button(action: {
+                        logManager.log("Manually stopping Bridgefy instance...")
+                        bridgefy?.stop()
+                    }) {
+                        Text("Stop Bridgefy")
+                            .padding()
+                            .frame(maxWidth: .infinity)
+                            .background(Color.orange)
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
+                    }
+                    .padding(.horizontal)
+                    .padding(.top, 5)
+                }
 
                 Picker("Send Mode", selection: $transmissionStrategy) {
                     ForEach(TransmissionStrategy.allCases) { strategy in

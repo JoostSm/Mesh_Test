@@ -7,13 +7,17 @@ struct PeerListView: View {
     
     var body: some View {
         NavigationView {
-            List(Array(bridgefyDelegate.connectedUsers), id: \.self) { peer in
+            List(Array(bridgefyDelegate.allKnownPeers), id: \.self) { peer in
                 Button(action: {
                     selectedPeer = peer
                     isPresented = false
                 }) {
                     HStack {
                         Text(bridgefyDelegate.deviceNames[peer] ?? String(peer.uuidString.prefix(8)))
+                        if bridgefyDelegate.connectedUsers.contains(peer) {
+                            Image(systemName: "wifi") // Icon for directly connected
+                                .foregroundColor(.green)
+                        }
                         Spacer()
                         if peer == selectedPeer {
                             Image(systemName: "checkmark")
@@ -27,8 +31,8 @@ struct PeerListView: View {
                 isPresented = false
             })
             .overlay(Group {
-                if bridgefyDelegate.connectedUsers.isEmpty {
-                    Text("No peers found\nMake sure other devices are running the app")
+                if bridgefyDelegate.allKnownPeers.isEmpty {
+                    Text("No peers encountered yet\nMake sure other devices are running the app")
                         .multilineTextAlignment(.center)
                         .foregroundColor(.gray)
                 }
